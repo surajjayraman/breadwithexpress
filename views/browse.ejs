@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breads!</title>
+</head>
+<body>
+    <h1> All the breads!!!</h1>
+    <% console.log(breads) %>
+    
+    <% for (const breadKey in breads) { %>
+        <div class="bread">
+            <h2>Name: <%= breads[breadKey].name %></h2>
+            <h3>Yeast: <%= breads[breadKey].yeast %>, Flour: <%= breads[breadKey].flour%> </h3>
+            <h3>Expires on: <%= breads[breadKey].expiryDate %></h3>
+        </div>
+
+    <% } %>
+</body>
+</html>
