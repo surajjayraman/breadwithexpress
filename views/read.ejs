@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Just one bread</title>
 </head>
 <body>
-    <div class="bread">
-       <h1><%= bread.name %></h1>  
-    </div>       
+    <h1>Bread Details</h1>
+    <% if (bread) { %>
+        <div class="bread">            
+           <h2>Name: <%= bread.name %></h2>  
+           <h2>Yeast: <%= bread.yeast %></h2>
+           <h2>Flour: <%= bread.flour %></h2>
+           <h2>Expiry Date: <%= bread.expiryDate %></h2>
+        </div>
+    <% } else { %>
+        <h2> Sorry no bread for you!!</h2>
+    <% } %>
+           
 </body>
 </html>
