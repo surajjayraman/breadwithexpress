@@ -36,11 +36,20 @@ const breads = {
   
 // Browse GET breads
 app.get('/breads', (req,res) => {
-  //res.json(breads);
   const templateVars = {
     breads: breads
   };
   res.render('browse', templateVars);
+});
+
+// Read - GET /breads/:breadId
+app.get('/breads/:breadId', (req,res) => {
+  const breadId = req.params.breadId;
+  const bread = breads[breadId];
+  const templateVars = {
+    bread: bread
+  };
+  res.render('read', templateVars);
 });
 
 app.listen(port, () => {
