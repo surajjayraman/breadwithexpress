@@ -8,12 +8,13 @@
 <body>
     <h1> All the breads!!!</h1>
     <% console.log(breads) %>
-    
+
     <% for (const breadKey in breads) { %>
         <div class="bread">
             <h2>Name: <%= breads[breadKey].name %></h2>
             <h3>Yeast: <%= breads[breadKey].yeast %>, Flour: <%= breads[breadKey].flour%> </h3>
             <h3>Expires on: <%= breads[breadKey].expiryDate %></h3>
+            <a href="/breads/<%= breadKey %>">Detail Page</a>
         </div>
 
     <% } %>

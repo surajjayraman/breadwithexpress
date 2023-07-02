@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 3005;
 
 app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false}));
 app.set('view engine', 'ejs');
 
 const breads = {
@@ -51,6 +52,34 @@ app.get('/breads/:breadId', (req,res) => {
   };
   res.render('read', templateVars);
 });
+
+// Edit - GET /breads/:breadId/edit
+app.get('/breads/:breadId/edit', (req, res) => {
+  const breadId = req.params.breadId;
+  const bread = breads[breadId];
+  const templateVars = {
+    bread: bread,
+    breadId: breadId
+  };
+  res.render('edit-form', templateVars);
+
+});
+
+// Edit - POST /breads/:breadId
+app.post('/breads/:breadId', (req,res) => {
+    const breadId = req.params.breadId;
+    const bread = breads[breadId];
+    const templateVars = {
+        bread: bread,
+        breadId: breadId
+    };
+    
+    const newBreadName = req.body.newBreadName;
+    breads[breadId].name = newBreadName;
+    console.log(breads);
+    res.redirect(`/breads/${breadId}`);
+    
+  });
 
 app.listen(port, () => {
   console.log(`app is listening on port ${port}`);

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit the bread</title>
+</head>
+<body>
+    <h1>Edit the <%= bread.name %> bread:</h1>
+
+    <a href="/breads">Back to Home Page</a>
+
+    <form action="/breads/<%= breadId %>" method="POST">
+        <label>New bread name:</label>
+        <input 
+            name = 'newBreadName'
+            value= '<%= bread.name %>'
+        />
+        <button type="submit">Edit bread</button>
+
+    </form>
+    
+</body>
+</html>
