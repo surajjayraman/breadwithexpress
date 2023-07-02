@@ -17,6 +17,10 @@
             <a href="/breads/<%= breadKey %>">Detail Page</a>
         </div>
 
+        <form action="/breads/<%= breadKey %>/delete" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+
     <% } %>
 </body>
 </html>

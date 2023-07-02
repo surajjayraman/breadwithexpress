@@ -80,7 +80,7 @@ app.post('/breads/:breadId', (req,res) => {
     
 });
 
-// ADD - POST breads
+// ADD - POST / /breads
 app.post('/breads', (req, res) => {
   const name = req.body.name;
   const yeast = req.body.yeast;
@@ -98,6 +98,13 @@ app.post('/breads', (req, res) => {
   breads[newId] = newBread;
 
   console.log(breads);
+  res.redirect('/breads');
+});
+
+// DELETE - POST /breads/:breadId/delete
+app.post('/breads/:breadId/delete', (req, res) => {
+  const breadId = req.params.breadId;
+  delete breads[breadId];
   res.redirect('/breads');
 });
 
