@@ -43,6 +43,11 @@ app.get('/breads', (req,res) => {
   res.render('browse', templateVars);
 });
 
+// ADD - GET  /breads/new
+app.get('/breads/new', (req, res) => {
+  res.render('new-bread-form');
+});
+
 // Read - GET /breads/:breadId
 app.get('/breads/:breadId', (req,res) => {
   const breadId = req.params.breadId;
@@ -67,19 +72,34 @@ app.get('/breads/:breadId/edit', (req, res) => {
 
 // Edit - POST /breads/:breadId
 app.post('/breads/:breadId', (req,res) => {
-    const breadId = req.params.breadId;
-    const bread = breads[breadId];
-    const templateVars = {
-        bread: bread,
-        breadId: breadId
-    };
+  const breadId = req.params.breadId;
+  const newBreadName = req.body.newBreadName;
+  breads[breadId].name = newBreadName;
+  console.log(breads);
+  res.redirect(`/breads/${breadId}`);
     
-    const newBreadName = req.body.newBreadName;
-    breads[breadId].name = newBreadName;
-    console.log(breads);
-    res.redirect(`/breads/${breadId}`);
-    
-  });
+});
+
+// ADD - POST breads
+app.post('/breads', (req, res) => {
+  const name = req.body.name;
+  const yeast = req.body.yeast;
+  const flour = req.body.flour;
+  const expiryDate = req.body.expiryDate;
+
+  const newBread = {
+    name: name,
+    yeast: yeast,
+    flour: flour,
+    expiryDate: expiryDate
+  };
+
+  const newId = Math.random().toString(36).substring(2, 6);
+  breads[newId] = newBread;
+
+  console.log(breads);
+  res.redirect('/breads');
+});
 
 app.listen(port, () => {
   console.log(`app is listening on port ${port}`);
