@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const app = express();
 const port = process.env.PORT || 3005;
 
+// middleware
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false}));
 app.set('view engine', 'ejs');
@@ -35,6 +36,10 @@ const breads = {
   },
 }; // add, edit, delete
   
+// login  endpoints
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 // Browse GET breads
 app.get('/breads', (req,res) => {
   const templateVars = {
