@@ -6,6 +6,7 @@ const port = process.env.PORT || 3005;
 
 // middleware
 app.use(morgan('dev'));
+// populates req.body
 app.use(express.urlencoded({ extended: false}));
 app.set('view engine', 'ejs');
 
@@ -43,6 +44,14 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log(req.body);
+  // pull data off the body
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password) {
+    res.status(400).send('Please provide a username and password');
+    return;
+  }
   res.render('login');
 });
 // Browse GET breads
