@@ -37,6 +37,19 @@ const breads = {
   },
 }; // add, edit, delete
   
+// users global object
+const users = {
+  abc: {
+    id: "abc",
+    username: "alice",
+    password: "1234",
+  },
+  def: {
+    id: "def",
+    username: "bob",
+    password: "5678",
+  },
+};
 // login  endpoints
 app.get('/login', (req, res) => {
   res.render('login');
@@ -52,6 +65,21 @@ app.post('/login', (req, res) => {
     res.status(400).send('Please provide a username and password');
     return;
   }
+
+  // look up the user based off their username
+  let foundUser = null;
+  for (const userId in users) {
+    const user = users[userId];
+    if (user['username'] === username) {
+      console.log('User Found');
+      foundUser = user;
+    }
+  }
+
+  if (!foundUser) {
+    res.status(400).send('no user with that username found');
+  }
+
   res.render('login');
 });
 // Browse GET breads
