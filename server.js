@@ -40,6 +40,11 @@ const breads = {
 app.get('/login', (req, res) => {
   res.render('login');
 });
+
+app.post('/login', (req, res) => {
+  console.log(req.body);
+  res.render('login');
+});
 // Browse GET breads
 app.get('/breads', (req,res) => {
   const templateVars = {
@@ -111,6 +116,11 @@ app.post('/breads/:breadId/delete', (req, res) => {
   const breadId = req.params.breadId;
   delete breads[breadId];
   res.redirect('/breads');
+});
+
+// page not found
+app.get('*', (req, res) => {
+  res.render('error');
 });
 
 app.listen(port, () => {
