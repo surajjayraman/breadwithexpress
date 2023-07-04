@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser  = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3005;
@@ -8,6 +9,9 @@ const port = process.env.PORT || 3005;
 app.use(morgan('dev'));
 // populates req.body
 app.use(express.urlencoded({ extended: false}));
+// retrieve cookies
+app.use(cookieParser());
+
 app.set('view engine', 'ejs');
 
 const breads = {
@@ -55,6 +59,19 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/protected', (req, res) => {
+  console.log(req.cookies);
+  const userId = req.cookies.userId;
+  if (!userId) {
+    res.status(401).send('You must be logged in to see this page');
+  }
+  const user = users[userId];
+  const templateVars = {
+    user: user
+  };
+  res.render('protected', templateVars);
+});
+
 app.post('/login', (req, res) => {
   console.log(req.body);
   // pull data off the body
@@ -84,7 +101,11 @@ app.post('/login', (req, res) => {
     res.status(400).send('password do not match');
   }
 
-  res.render('login');
+  // set a cookie
+  res.cookie('userId',foundUser['id']);
+
+  // redirect user
+  res.redirect('/protected');
 });
 // Browse GET breads
 app.get('/breads', (req,res) => {
