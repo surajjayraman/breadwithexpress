@@ -76,8 +76,12 @@ app.post('/login', (req, res) => {
     }
   }
 
+  // check credentials
   if (!foundUser) {
     res.status(400).send('no user with that username found');
+  }
+  if (foundUser['password'] !== password) {
+    res.status(400).send('password do not match');
   }
 
   res.render('login');
