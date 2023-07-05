@@ -107,6 +107,13 @@ app.post('/login', (req, res) => {
   // redirect user
   res.redirect('/protected');
 });
+
+// logout
+app.post('/logout', (req, res) => {
+  res.clearCookie('userId');
+  res.redirect('/login');
+});
+
 // Browse GET breads
 app.get('/breads', (req,res) => {
   const templateVars = {
