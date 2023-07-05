@@ -114,6 +114,11 @@ app.post('/logout', (req, res) => {
   res.redirect('/login');
 });
 
+// registration endpoints
+app.get('/register', (req,res) => {
+  res.render('register');
+});
+
 // Browse GET breads
 app.get('/breads', (req,res) => {
   const templateVars = {
