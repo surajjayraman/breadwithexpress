@@ -119,6 +119,25 @@ app.get('/register', (req,res) => {
   res.render('register');
 });
 
+app.post('/register', (req,res) => {
+
+  const newId = Math.random().toString(36).substring(2, 5);
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password) {
+    res.status(400).send('Please provide a username and password');
+    return;
+  }
+  
+  users[newId] = {
+    id : newId,
+    username: username,
+    password: password
+  };
+  res.redirect('/login');
+});
+
 // Browse GET breads
 app.get('/breads', (req,res) => {
   const templateVars = {
