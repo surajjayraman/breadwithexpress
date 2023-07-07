@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser  = require('cookie-parser');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const port = process.env.PORT || 3005;
@@ -96,9 +97,12 @@ app.post('/login', (req, res) => {
   // check credentials
   if (!foundUser) {
     res.status(400).send('no user with that username found');
+    return;
   }
-  if (foundUser['password'] !== password) {
+  
+  if (!bcrypt.compareSync(password, foundUser['password'])) {
     res.status(400).send('password do not match');
+    return;
   }
 
   // set a cookie
@@ -129,11 +133,14 @@ app.post('/register', (req,res) => {
     res.status(400).send('Please provide a username and password');
     return;
   }
-  
+
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+
   users[newId] = {
     id : newId,
     username: username,
-    password: password
+    password: hash
   };
   res.redirect('/login');
 });
