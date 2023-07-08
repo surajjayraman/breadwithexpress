@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const cookieParser  = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const bcrypt = require('bcryptjs');
 
 const app = express();
@@ -10,8 +10,11 @@ const port = process.env.PORT || 3005;
 app.use(morgan('dev'));
 // populates req.body
 app.use(express.urlencoded({ extended: false}));
-// retrieve cookies
-app.use(cookieParser());
+// cookie encryption middleware
+app.use(cookieSession({
+  name: 'my-cookie-name',
+  keys: ['secret'],
+}));
 
 app.set('view engine', 'ejs');
 
@@ -61,8 +64,8 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/protected', (req, res) => {
-  console.log(req.cookies);
-  const userId = req.cookies.userId;
+  console.log(req.session.userId);
+  const userId = req.session.userId;
   if (!userId) {
     res.status(401).send('You must be logged in to see this page');
   }
@@ -105,8 +108,8 @@ app.post('/login', (req, res) => {
     return;
   }
 
-  // set a cookie
-  res.cookie('userId',foundUser['id']);
+  // set an encrypted cookie
+  req.session.userId = foundUser['id'];
 
   // redirect user
   res.redirect('/protected');
