@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const bcrypt = require('bcryptjs');
 
 const app = express();
+app.use(express.static(__dirname + '/public'));
 const port = process.env.PORT || 3005;
 
 // middleware
@@ -15,6 +16,7 @@ app.use(cookieSession({
   name: 'my-cookie-name',
   keys: ['secret'],
 }));
+
 
 app.set('view engine', 'ejs');
 
